@@ -1,5 +1,4 @@
 "use client"
-
 import { useEffect, useState } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis, ResponsiveContainer } from "recharts"
 import { Rnd } from 'react-rnd'
@@ -45,16 +44,23 @@ export default function Home() {
         topLeft: true
       }}
     >
-      <Card
-        className={``}
-      >
+      <Card>
         <CardHeader>
           <CardTitle>Title</CardTitle>
         </CardHeader>
         <CardContent className="pb-4">
           <ResponsiveContainer width="100%" height={300}>
             <JsxParser
-              components={{  Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis, ResponsiveContainer }}
+              components={{  
+                Bar: Bar as any,
+                BarChart: BarChart as any,
+                CartesianGrid: CartesianGrid as any,
+                XAxis: XAxis as any,
+                Tooltip: Tooltip as any,
+                Legend: Legend as any,
+                YAxis: YAxis as any,
+                ResponsiveContainer: ResponsiveContainer as any
+              }}
               jsx={code}
               bindings={{ data }}
             />
