@@ -17,7 +17,7 @@ export default function Home() {
     { name: "Page B", uv: 3000, pv: 1398 }
   ]
 
-  const code = `<ResponsiveContainer width="100%" height={300}>
+  const code = `<ResponsiveContainer width="100%" height={150}>
   <BarChart data={data}>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" />
@@ -34,9 +34,9 @@ export default function Home() {
   return (
     <Rnd
       enableResizing={{
-        top: false,
+        top: true,
         right: true,
-        bottom: false,
+        bottom: true,
         left: true,
         topRight: true,
         bottomRight: true,
