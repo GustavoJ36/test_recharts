@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis,ResponsiveContainer } from "recharts"
+
 import { Rnd } from 'react-rnd'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -23,20 +24,33 @@ export default function Home() {
     <Rnd>
       <Card
         className={``}
+        // size={{ width: 300, height:180 }}
+        enableResizing={{
+          top: false,
+          right: true,
+          bottom: false,
+          left: true,
+          topRight: true,
+          bottomRight: true,
+          bottomLeft: true,
+          topLeft: true
+        }}
       >
         <CardHeader>
           <CardTitle>Title</CardTitle>
         </CardHeader>
         <CardContent className="pb-4">
-          <BarChart width={300} height={180} data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="pv" fill="#8884d8" />
-            <Bar dataKey="uv" fill="#82ca9d" />
-          </BarChart>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart width={300} height={180} data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="pv" fill="#8884d8" />
+              <Bar dataKey="uv" fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
         </CardContent>
       </Card>
     </Rnd>
