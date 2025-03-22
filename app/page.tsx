@@ -51,12 +51,9 @@ export default function Home() {
   ]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4">
-      <h1 className="text-2xl font-bold mb-6">Data Visualization</h1>
-
+    <>
       {/* Only render the chart on the client after mounting */}
       {isMounted ? (
-        <div className="w-full max-w-4xl overflow-x-auto">
           <BarChart width={730} height={250} data={data}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
@@ -66,12 +63,11 @@ export default function Home() {
             <Bar dataKey="pv" fill="#8884d8" />
             <Bar dataKey="uv" fill="#82ca9d" />
           </BarChart>
-        </div>
       ) : (
-        <div className="w-[730px] h-[250px] bg-gray-100 animate-pulse flex items-center justify-center">
-          <p className="text-gray-500">Loading chart...</p>
+        <div>
+          <p>Loading chart...</p>
         </div>
       )}
-    </main>
+    </>
   )
 }
