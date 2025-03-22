@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis,ResponsiveContainer } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis, ResponsiveContainer } from "recharts"
 
 import { Rnd } from 'react-rnd'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -21,20 +21,20 @@ export default function Home() {
   if (!isMounted) return null
 
   return (
-    <Rnd>
+    <Rnd
+      enableResizing={{
+        top: false,
+        right: true,
+        bottom: false,
+        left: true,
+        topRight: true,
+        bottomRight: true,
+        bottomLeft: true,
+        topLeft: true
+      }}
+    >
       <Card
         className={``}
-        // size={{ width: 300, height:180 }}
-        enableResizing={{
-          top: false,
-          right: true,
-          bottom: false,
-          left: true,
-          topRight: true,
-          bottomRight: true,
-          bottomLeft: true,
-          topLeft: true
-        }}
       >
         <CardHeader>
           <CardTitle>Title</CardTitle>
