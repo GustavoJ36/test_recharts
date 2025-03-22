@@ -19,7 +19,7 @@ export default function Home() {
 
   const code = `
     <ResponsiveContainer width="100%" height={300}>
-      <BarChart width={300} height={180} data={data}>
+      <BarChart data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
