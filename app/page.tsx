@@ -18,15 +18,17 @@ export default function Home() {
   ]
 
   const code = `
-    <BarChart width={300} height={180} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="pv" fill="#8884d8" />
-      <Bar dataKey="uv" fill="#82ca9d" />
-    </BarChart>
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart width={300} height={180} data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="pv" fill="#8884d8" />
+        <Bar dataKey="uv" fill="#82ca9d" />
+      </BarChart>
+    </ResponsiveContainer>
   `
 
   if (!isMounted) return null
@@ -49,7 +51,6 @@ export default function Home() {
           <CardTitle>Title</CardTitle>
         </CardHeader>
         <CardContent className="pb-4">
-          <ResponsiveContainer width="100%" height={300}>
             <JsxParser
               components={{  
                 Bar: Bar as any,
@@ -64,7 +65,6 @@ export default function Home() {
               jsx={code}
               bindings={{ data }}
             />
-          </ResponsiveContainer>
         </CardContent>
       </Card>
     </Rnd>
