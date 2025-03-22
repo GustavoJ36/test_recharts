@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis } from "recharts"
+import { Rnd } from 'react-rnd'
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false)
@@ -14,18 +15,20 @@ export default function Home() {
     { name: "Page A", uv: 4000, pv: 2400 },
     { name: "Page B", uv: 3000, pv: 1398 }
   ]
-  
+
   if (!isMounted) return null
 
   return (
-    <BarChart width={300} height={180} data={data}>
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="pv" fill="#8884d8" />
-      <Bar dataKey="uv" fill="#82ca9d" />
-    </BarChart>
+    <Rnd>
+      <BarChart width={300} height={180} data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="pv" fill="#8884d8" />
+        <Bar dataKey="uv" fill="#82ca9d" />
+      </BarChart>
+    </Rnd>
   )
 }
