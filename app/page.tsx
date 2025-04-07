@@ -5,7 +5,6 @@ import { Rnd } from "react-rnd"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import JsxParser from "react-jsx-parser"
 
-// Define types for chart position and size
 type ChartPosition = {
   x: number
   y: number
@@ -30,18 +29,27 @@ export default function Home() {
     alert("chart deleted")
   }
 
-  // Save position and size to localStorage when they change
   const savePositionToLocalStorage = (position: ChartPosition) => {
     if (typeof window !== "undefined") {
       localStorage.setItem("chartPosition", JSON.stringify(position))
     }
   }
 
-  // Handle position and size changes
   const handlePositionChange = (x: number, y: number) => {
     const newPosition = { ...chartPosition, x, y }
     setChartPosition(newPosition)
     savePositionToLocalStorage(newPosition)
+  }
+
+  const handleResize = (
+    _e: any,
+    _direction: any,
+    ref: any,
+    _delta: any,
+    position: { x: number; y: number }
+  ) => {
+    handleResizeStop(parseInt(ref.style.width), parseInt(ref.style.height))
+    handlePositionChange(position.x, position.y)
   }
 
   const handleResizeStop = (width: number, height: number) => {
@@ -52,8 +60,6 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true)
-
-    // Load position and size from localStorage on mount
     if (typeof window !== "undefined") {
       const savedPosition = localStorage.getItem("chartPosition")
       if (savedPosition) {
@@ -75,10 +81,7 @@ export default function Home() {
   position={{ x: ${chartPosition.x}, y: ${chartPosition.y} }}
   size={{ width: ${chartPosition.width}, height: ${chartPosition.height} }}
   onDragStop={(e, d) => handlePositionChange(d.x, d.y)}
-  onResizeStop={(e, direction, ref, delta, position) => {
-    handleResizeStop(parseInt(ref.style.width), parseInt(ref.style.height));
-    handlePositionChange(position.x, position.y);
-  }}
+  onResizeStop={handleResize}
   enableResizing={{
     top: true,
     right: true,
@@ -91,7 +94,7 @@ export default function Home() {
   }}
 >
   <button
-  onClick={() => ChartDeleteHandler()}
+  onClick={ChartDeleteHandler}
   className="absolute -right-2 -top-2 z-50 rounded-full w-6 h-6 flex items-center justify-center shadow-sm bg-white hover:bg-gray-100 text-gray-500 hover:text-gray-700"
   aria-label="Delete chart"
   >
@@ -143,11 +146,10 @@ export default function Home() {
         ChartDeleteHandler,
         chartPosition,
         handlePositionChange,
-        handleResizeStop,
+        handleResize,
       }}
       blacklistedAttrs={[]}
       onError={handleParseError}
     />
   )
 }
-
