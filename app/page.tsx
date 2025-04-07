@@ -12,6 +12,10 @@ export default function Home() {
     console.error('JSX Parsing Error:', error);
   };
 
+  const ChartDeleteHandler = () => {
+    alert('chart deleted')
+  };
+
   useEffect(() => {
     setIsMounted(true)
   }, [])
@@ -33,6 +37,16 @@ export default function Home() {
     topLeft: true
   }}
 >
+
+  <button
+  onClick={() => ChartDeleteHandler()}
+  className="absolute t-right-1 top-8 z-50 rounded-full w-6 h-6 flex items-center justify-center shadow-sm"
+
+  aria-label="Delete chart"
+  >
+  ×
+  </button>
+
   <Card>
     <CardHeader>
       <CardTitle>Title</CardTitle>
@@ -73,7 +87,7 @@ export default function Home() {
         ResponsiveContainer: ResponsiveContainer as any
       }}
       jsx={code}
-      bindings={{ data }}
+      bindings={{ data,ChartDeleteHandler }}
       blacklistedAttrs={[]}
       onError={handleParseError}
     />
