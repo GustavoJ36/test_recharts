@@ -1,5 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
+import type React from "react"
+
 import { Bar, BarChart, CartesianGrid, XAxis, Tooltip, Legend, YAxis, ResponsiveContainer } from "recharts"
 import { Rnd } from "react-rnd"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -25,7 +27,8 @@ export default function Home() {
     console.error("JSX Parsing Error:", error)
   }
 
-  const ChartDeleteHandler = () => {
+  const ChartDeleteHandler = (e: React.MouseEvent) => {
+    e.stopPropagation()
     alert("chart deleted")
   }
 
@@ -41,14 +44,8 @@ export default function Home() {
     savePositionToLocalStorage(newPosition)
   }
 
-  const handleResize = (
-    _e: any,
-    _direction: any,
-    ref: any,
-    _delta: any,
-    position: { x: number; y: number }
-  ) => {
-    handleResizeStop(parseInt(ref.style.width), parseInt(ref.style.height))
+  const handleResize = (_e: any, _direction: any, ref: any, _delta: any, position: { x: number; y: number }) => {
+    handleResizeStop(Number.parseInt(ref.style.width), Number.parseInt(ref.style.height))
     handlePositionChange(position.x, position.y)
   }
 
@@ -93,13 +90,14 @@ export default function Home() {
     topLeft: true
   }}
 >
-  <button
-  onClick={ChartDeleteHandler}
+<button
+  onMouseDown={(e) => e.stopPropagation()} 
+  onClick={(e) => ChartDeleteHandler(e)}
   className="absolute -right-2 -top-2 z-50 rounded-full w-6 h-6 flex items-center justify-center shadow-sm bg-white hover:bg-gray-100 text-gray-500 hover:text-gray-700"
   aria-label="Delete chart"
-  >
+>
   ×
-  </button>
+</button>
 
   <Card className="w-full h-full">
     <CardHeader>
