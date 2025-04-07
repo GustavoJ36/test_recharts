@@ -8,6 +8,10 @@ import JsxParser from 'react-jsx-parser'
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false)
 
+  const handleParseError = (error: any) => {
+    console.error('JSX Parsing Error:', error);
+  };
+
   useEffect(() => {
     setIsMounted(true)
   }, [])
@@ -17,54 +21,61 @@ export default function Home() {
     { name: "Page B", uv: 3000, pv: 1398 }
   ]
 
-  const code = `<ResponsiveContainer width="100%" height={150}>
-  <BarChart data={data}>
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="name" />
-    <YAxis />
-    <Tooltip />
-    <Legend />
-    <Bar dataKey="pv" fill="#8884d8" />
-    <Bar dataKey="uv" fill="#82ca9d" />
-  </BarChart>
-</ResponsiveContainer>`
+  const code = `<Rnd
+  enableResizing={{
+    top: true,
+    right: true,
+    bottom: true,
+    left: true,
+    topRight: true,
+    bottomRight: true,
+    bottomLeft: true,
+    topLeft: true
+  }}
+>
+  <Card>
+    <CardHeader>
+      <CardTitle>Title</CardTitle>
+    </CardHeader>
+    <CardContent className="pb-4">
+      <ResponsiveContainer width="100%" height={150}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="pv" fill="#8884d8" />
+          <Bar dataKey="uv" fill="#82ca9d" />
+        </BarChart>
+      </ResponsiveContainer>
+    </CardContent>
+  </Card>
+</Rnd>`
 
   if (!isMounted) return null
 
   return (
-    <Rnd
-      enableResizing={{
-        top: true,
-        right: true,
-        bottom: true,
-        left: true,
-        topRight: true,
-        bottomRight: true,
-        bottomLeft: true,
-        topLeft: true
+    <JsxParser
+      components={{
+        Rnd: Rnd as any,
+        Card: Card  as any, 
+        CardContent: CardContent as any, 
+        CardHeader: CardHeader as any, 
+        CardTitle: CardTitle as any,
+        Bar: Bar as any,
+        BarChart: BarChart as any,
+        CartesianGrid: CartesianGrid as any,
+        XAxis: XAxis as any,
+        Tooltip: Tooltip as any,
+        Legend: Legend as any,
+        YAxis: YAxis as any,
+        ResponsiveContainer: ResponsiveContainer as any
       }}
-    >
-      <Card>
-        <CardHeader>
-          <CardTitle>Title</CardTitle>
-        </CardHeader>
-        <CardContent className="pb-4">
-            <JsxParser
-              components={{  
-                Bar: Bar as any,
-                BarChart: BarChart as any,
-                CartesianGrid: CartesianGrid as any,
-                XAxis: XAxis as any,
-                Tooltip: Tooltip as any,
-                Legend: Legend as any,
-                YAxis: YAxis as any,
-                ResponsiveContainer: ResponsiveContainer as any
-              }}
-              jsx={code}
-              bindings={{ data }}
-            />
-        </CardContent>
-      </Card>
-    </Rnd>
+      jsx={code}
+      bindings={{ data }}
+      blacklistedAttrs={[]}
+      onError={handleParseError}
+    />
   )
 }
