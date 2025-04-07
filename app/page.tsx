@@ -45,16 +45,36 @@ export default function Home() {
   }
 
   const handleResize = (_e: any, _direction: any, ref: any, _delta: any, position: { x: number; y: number }) => {
-    handleResizeStop(Number.parseInt(ref.style.width), Number.parseInt(ref.style.height))
-    handlePositionChange(position.x, position.y)
+    const width = parseInt(ref.style.width, 10)
+    const height = parseInt(ref.style.height, 10)
+    if (!isNaN(width) && !isNaN(height)) {
+      const newPosition = { ...chartPosition, width, height, x: position.x, y: position.y }
+      setChartPosition(newPosition)
+      savePositionToLocalStorage(newPosition)
+    }
   }
 
-  const handleResizeStop = (width: number, height: number) => {
-    const newPosition = { ...chartPosition, width, height }
-    setChartPosition(newPosition)
-    savePositionToLocalStorage(newPosition)
+  const handleResizeStop = (
+    _e: any,
+    _direction: any,
+    ref: any,
+    _delta: any,
+    position: { x: number; y: number }
+  ) => {
+    const width = parseInt(ref.style.width, 10)
+    const height = parseInt(ref.style.height, 10)
+    if (!isNaN(width) && !isNaN(height)) {
+      const newPosition = {
+        ...chartPosition,
+        width,
+        height,
+        x: position.x,
+        y: position.y
+      }
+      setChartPosition(newPosition)
+      savePositionToLocalStorage(newPosition)
+    }
   }
-
   useEffect(() => {
     setIsMounted(true)
     if (typeof window !== "undefined") {
@@ -78,7 +98,7 @@ export default function Home() {
   position={{ x: ${chartPosition.x}, y: ${chartPosition.y} }}
   size={{ width: ${chartPosition.width}, height: ${chartPosition.height} }}
   onDragStop={(e, d) => handlePositionChange(d.x, d.y)}
-  onResizeStop={handleResize}
+  onResizeStop={handleResizeStop}  // Changed to onResizeStop
   enableResizing={{
     top: true,
     right: true,
@@ -90,14 +110,14 @@ export default function Home() {
     topLeft: true
   }}
 >
-<button
-  onMouseDown={(e) => e.stopPropagation()} 
-  onClick={(e) => ChartDeleteHandler(e)}
-  className="absolute -right-2 -top-2 z-50 rounded-full w-6 h-6 flex items-center justify-center shadow-sm bg-white hover:bg-gray-100 text-gray-500 hover:text-gray-700"
-  aria-label="Delete chart"
->
-  ×
-</button>
+  <button
+    onMouseDown={(e) => e.stopPropagation()}
+    onClick={(e) => ChartDeleteHandler(e)}
+    className="absolute -right-2 -top-2 z-50 rounded-full w-6 h-6 flex items-center justify-center shadow-sm bg-white hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+    aria-label="Delete chart"
+  >
+    ×
+  </button>
 
   <Card className="w-full h-full">
     <CardHeader>
@@ -118,6 +138,7 @@ export default function Home() {
     </CardContent>
   </Card>
 </Rnd>`
+
 
   if (!isMounted) return null
 
@@ -143,6 +164,7 @@ export default function Home() {
         data,
         ChartDeleteHandler,
         chartPosition,
+        handleResizeStop,
         handlePositionChange,
         handleResize,
       }}
